@@ -33,23 +33,23 @@ class AudioDownloader:
 
      """
 
-    def download_audio(self, url: str, location: str, name: str):
+    def download_audio(self, url: str, song_title: str):
+        
         ydl_opts = {
             'format': 'bestaudio/best',
-            'outtmpl': f'{location}/{name}.wav',
-            "progress_hooks": [self.callable_hook],
-            'noplaylist': True,
-            'continue_dl': True,
+            'outtmpl': f"{song_title}.%(ext)s'",
             'quiet': True,
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'wav',
-                'preferredquality': '192'            
-            }]
+            'postprocessors': [
+                {'key': 'FFmpegExtractAudio','preferredcodec': 'mp3',
+                'preferredquality': '192',
+                },
+                {'key': 'FFmpegMetadata'},
+            ],
         }
+
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.cache.remove()
-            info_dict = ydl.extract_info(url, download=False)
-            ydl.prepare_filename(info_dict)
-            ydl.download([url])
+            ydl.extract_info(url, download=True) 
+
+def test_hook(*args):
+    pass
 
