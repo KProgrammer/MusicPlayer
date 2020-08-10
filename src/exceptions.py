@@ -1,0 +1,2 @@
+class StopPlayerException(Exception):
+    pass
