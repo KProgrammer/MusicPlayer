@@ -6,13 +6,31 @@ import src.storage as storage
 import os
 
 
-def download(params):
+def download(params):    
+    if storage.data["current_playlist"] == "":
+        print("Go to a playlist first")
+        return
+
+    jh = JsonHandler()
+    data = jh.readFile()    
+
+    def clbck(id):        
+        for playlist_data in data["playlists"].values():
+            for song in playlist_data["songs"]:
+                if song["id"] == id:                    
+                    return False         
+        return True    
+
     def success_hook(response):
         print("success")
+
+    def downloading_hook(downloaded_bytes, total_bytes, elapsed, eta, speed):
+        print(downloaded_bytes * 100/total_bytes)        
     def null_hook(response):
         pass
-    ad = AudioDownloader(null_hook, null_hook, success_hook)
-    ad.download_audio(params[0], params[1])
+    ad = AudioDownloader(downloading_hook, null_hook, success_hook)    
+    data["playlists"][storage.data["current_playlist"]]["songs"].append({"id": ad.download_audio(params[0], clbck), "name": params[1]})
+    jh.writeFile(data)
 
 def make_playlist(params):    
     jh = JsonHandler()

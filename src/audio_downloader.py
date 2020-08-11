@@ -33,11 +33,13 @@ class AudioDownloader:
 
      """
 
-    def download_audio(self, url: str, song_title: str):
+    def download_audio(self, url: str, clbck):
+        """If clbck returns true, it will download else it wont """
         
         ydl_opts = {
             'format': 'bestaudio/best',
-            'outtmpl': f"{song_title}.%(ext)s'",
+            'outtmpl': "./data/%(id)s.%(ext)s",
+            "progress_hooks": [self.callable_hook],
             'quiet': True,
             'postprocessors': [
                 {'key': 'FFmpegExtractAudio','preferredcodec': 'mp3',
@@ -48,8 +50,9 @@ class AudioDownloader:
         }
 
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.extract_info(url, download=True) 
+            info_dict = ydl.extract_info(url, download=False)
+            if clbck(info_dict.get('id')):
+                ydl.download([url]) 
+            return info_dict.get('id')                
 
-def test_hook(*args):
-    pass
 
