@@ -35,7 +35,12 @@ def remove_playlist(params):
         return
     del data['playlists'][params[0]]
     jh.writeFile(data)
-    print("Playlist removed successfully")       
+    print("Playlist removed successfully")     
+
+def view_playlists():
+    jh = JsonHandler()
+    data = jh.readFile() 
+    print('\n'.join(data['playlists'].keys()))
 
 def move_to_playlist(params):
     jh = JsonHandler()

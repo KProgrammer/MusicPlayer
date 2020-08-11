@@ -8,7 +8,8 @@ commands = [
     Command(["d", "download"], 2, functions.download),
     Command(["mp", "make_playlist"], 1, functions.make_playlist),
     Command(["rp", "remove_playlist"], 1, functions.remove_playlist),    
-    Command(["->", '=>', 'mt', 'move_to'], 1, functions.move_to_playlist)
+    Command(["->", '=>', 'mt', 'move_to'], 1, functions.move_to_playlist),
+    Command(["pl", "playlists"], 0, functions.view_playlists)
 ]
 
 def getCommandData(inp: str)->dict:
