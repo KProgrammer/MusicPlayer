@@ -27,7 +27,23 @@ def make_playlist(params):
     # storage.data["prompt"] = f"{params[0]}> "
     # storage.data["current_playlist"] = params[0]
     
-    
+def remove_playlist(params):
+    jh = JsonHandler()
+    data = jh.readFile()
+    if params[0] not in data['playlists'].keys():
+        print('That playlist does not exist')
+        return
+    del data['playlists'][params[0]]
+    jh.writeFile(data)
+    print("Playlist removed successfully")       
+
+def move_to_playlist(params):
+    jh = JsonHandler()
+    data = jh.readFile()
+    if params[0] not in data['playlists'].keys():
+        print('That playlist does not exist')
+        return
+    storage.data["current_playlist"]=params[0]        
 
 def nothing():
     pass

@@ -6,7 +6,9 @@ commands = [
     Command(["", "\t"], 0, functions.nothing),
     Command(["q", "quit"], 0, functions.quit),
     Command(["d", "download"], 2, functions.download),
-    Command(["mp", "make_playlist"], 1, functions.make_playlist)    
+    Command(["mp", "make_playlist"], 1, functions.make_playlist),
+    Command(["rp", "remove_playlist"], 1, functions.remove_playlist),    
+    Command(["->", '=>', 'mt', 'move_to'], 1, functions.move_to_playlist)
 ]
 
 def getCommandData(inp: str)->dict:

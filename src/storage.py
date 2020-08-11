@@ -1,3 +1,3 @@
 def initialize():
     global data
-    data = {"prompt": "> "}
+    data = {"current_playlist": ""}
