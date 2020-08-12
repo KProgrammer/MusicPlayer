@@ -37,6 +37,13 @@ def p():
         ap.resume()        
         logger.log("Resuming", color=logger.color.green, effect=logger.effect.bold_effect)
 
+def stop():
+    if storage.data["current_playlist"] == "":
+        logger.log("Go to a playlist first", color=logger.color.red, effect=logger.effect.bold_effect)
+        return
+    ap.stop()
+    logger.log("Stopping", color=logger.color.red)        
+
 def download(url, name):    
     if storage.data["current_playlist"] == "":
         logger.log("Go to a playlist first", color=logger.color.red, effect=logger.effect.bold_effect)
