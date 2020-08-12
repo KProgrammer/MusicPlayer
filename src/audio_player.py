@@ -2,7 +2,7 @@ from mpyg321.mpyg321 import MPyg321Player
 
 class Song:
     def __init__(self, id, name, playlist):
-        self.location = id
+        self.id = id
         self.name = name
         self.playlist = playlist
 

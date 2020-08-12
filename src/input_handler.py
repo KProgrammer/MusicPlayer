@@ -14,7 +14,7 @@ commands = [
     Command(["->", '=>', 'mt', 'move_to'], 1, functions.move_to_playlist, "Move to playlist to download and play music", {"name": "The name of the playlist to move to"}),
     Command(["pl", "playlists"], 0, functions.view_playlists, "View the playlists created", {}),
     Command(["so", "songs"], 0, functions.view_songs, "View the songs in the current playlist", {}),
-    # Command(["play"], 1, functions.play_song, "Plays the song from the playlist", {"name": "Name of the song"}),
+    Command(["play"], 1, functions.play_song, "Plays the song from the playlist", {"name": "Name of the song"}),
     # Command(["playp"], 0, functions.play_playlist, "Plays the current playlist in random order", {}),
     # Command(["p"], 0, functions.p, "Plays/Pauses the current song", {}),
     # Command(["s", "stop"], 0, functions.stop, "Stops the current song", {})

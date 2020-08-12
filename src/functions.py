@@ -5,11 +5,26 @@ from src.audio_downloader import AudioDownloader
 from src.json_handler import JsonHandler
 import src.storage as storage
 from src.m_logging import Logger
+from src.audio_player import Song, AudioPlayer
 
 import os
 
 logger = Logger()
+ap = AudioPlayer()
             
+
+def play_song(name):
+    if storage.data["current_playlist"] == "":
+        logger.log("Go to a playlist first", color=logger.color.red, effect=logger.effect.bold_effect)
+        return
+    jh = JsonHandler()
+    data = jh.readFile() 
+    songs = data["playlists"][storage.data["current_playlist"]]["songs"]   
+    for song in songs:
+        if song["name"] == name:
+            song_class = Song(song["id"], name, storage.data["current_playlist"])
+            ap.play(song_class)
+
 
 def download(url, name):    
     if storage.data["current_playlist"] == "":
