@@ -25,6 +25,17 @@ def play_song(name):
             song_class = Song(song["id"], name, storage.data["current_playlist"])
             ap.play(song_class)
 
+def p():
+    if storage.data["current_playlist"] == "":
+        logger.log("Go to a playlist first", color=logger.color.red, effect=logger.effect.bold_effect)
+        return
+
+    if ap.isPlaying:
+        ap.pause()
+        logger.log("Pausing", color=logger.color.yellow, effect=logger.effect.bold_effect)
+    else:
+        ap.resume()        
+        logger.log("Resuming", color=logger.color.green, effect=logger.effect.bold_effect)
 
 def download(url, name):    
     if storage.data["current_playlist"] == "":
