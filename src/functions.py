@@ -5,15 +5,30 @@ from src.audio_downloader import AudioDownloader
 from src.json_handler import JsonHandler
 import src.storage as storage
 from src.m_logging import Logger
-from src.audio_player import Song, AudioPlayer
-
+from src.audio_player import Song, AudioPlayer, MyPlayer
+from mpyg321.mpyg321 import MPyg321Player
 import os
 
 logger = Logger()
-ap = AudioPlayer()
+song_ap = AudioPlayer()
+current_ap = song_ap
             
+def play_playlist():
+    if storage.data["current_playlist"] == "":
+        logger.log("Go to a playlist first", color=logger.color.red, effect=logger.effect.bold_effect)
+        return
+    global current_ap
+    jh = JsonHandler()
+    data = jh.readFile() 
+    songs = []
+    for song in data["playlists"][storage.data["current_playlist"]]["songs"]:
+        songs.append(Song(song["id"], song["name"], storage.data["current_playlist"]))
+    playlist_ap = AudioPlayer(playlist=songs)
+    playlist_ap.playPlaylist()
+    current_ap = playlist_ap
 
 def play_song(name):
+    global current_ap
     if storage.data["current_playlist"] == "":
         logger.log("Go to a playlist first", color=logger.color.red, effect=logger.effect.bold_effect)
         return
@@ -23,25 +38,26 @@ def play_song(name):
     for song in songs:
         if song["name"] == name:
             song_class = Song(song["id"], name, storage.data["current_playlist"])
-            ap.play(song_class)
+            song_ap.play(song_class)
+    current_ap = song_ap            
 
 def p():
     if storage.data["current_playlist"] == "":
         logger.log("Go to a playlist first", color=logger.color.red, effect=logger.effect.bold_effect)
         return
 
-    if ap.isPlaying:
-        ap.pause()
+    if current_ap.isPlaying:
+        current_ap.pause()
         logger.log("Pausing", color=logger.color.yellow, effect=logger.effect.bold_effect)
     else:
-        ap.resume()        
+        current_ap.resume()        
         logger.log("Resuming", color=logger.color.green, effect=logger.effect.bold_effect)
 
 def stop():
     if storage.data["current_playlist"] == "":
         logger.log("Go to a playlist first", color=logger.color.red, effect=logger.effect.bold_effect)
         return
-    ap.stop()
+    current_ap.stop()
     logger.log("Stopping", color=logger.color.red)        
 
 def download(url, name):    
