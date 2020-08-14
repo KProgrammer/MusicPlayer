@@ -27,7 +27,7 @@ class AudioPlayer:
         self.isPlaying = False
 
     def play(self, song: Song):
-        self.m_player.play_song(f'./data/{song.id}.mp3')
+        self.m_player.play_song(f'/home/kprogrammer/Desktop/PythonProjects/MusicPlayer/data/{song.id}.mp3')
         self.current_song = song
         self.isPlaying = True
 

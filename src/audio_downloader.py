@@ -38,7 +38,7 @@ class AudioDownloader:
         
         ydl_opts = {
             'format': 'bestaudio/best',
-            'outtmpl': "./data/%(id)s.%(ext)s",
+            'outtmpl': "/home/kprogrammer/Desktop/PythonProjects/MusicPlayer/data/%(id)s.%(ext)s",
             "progress_hooks": [self.callable_hook],
             'quiet': True,
             'postprocessors': [

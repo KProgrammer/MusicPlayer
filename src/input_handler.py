@@ -17,7 +17,8 @@ commands = [
     Command(["play"], 1, functions.play_song, "Plays the song from the playlist", {"name": "Name of the song"}),
     Command(["playp"], 0, functions.play_playlist, "Plays the current playlist in random order", {}),
     Command(["p"], 0, functions.p, "Plays/Pauses the current song", {}),
-    Command(["s", "stop"], 0, functions.stop, "Stops the current song", {})
+    Command(["s", "stop"], 0, functions.stop, "Stops the current song", {}),
+    Command(["n", "next"], 0, functions.next, "Next song in the playlist", {})
 ]
 
 def getCommandData(inp: str)->dict:

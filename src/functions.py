@@ -12,7 +12,10 @@ import os
 logger = Logger()
 song_ap = AudioPlayer()
 current_ap = song_ap
-            
+
+def next():
+    current_ap.nextSong()
+
 def play_playlist():
     if storage.data["current_playlist"] == "":
         logger.log("Go to a playlist first", color=logger.color.red, effect=logger.effect.bold_effect)
@@ -69,7 +72,7 @@ def download(url, name):
     data = jh.readFile()    
 
     def clbck(id):                         
-        for f in os.listdir('./data'):
+        for f in os.listdir('/home/kprogrammer/Desktop/PythonProjects/MusicPlayer/data'):
             if f[:-4] == id:
                 return False
         return True                
